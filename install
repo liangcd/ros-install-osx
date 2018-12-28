@@ -91,7 +91,11 @@ do_install()
 
   # ROS infrastructure tools
   brew install libyaml || true
-  pip2 install -U setuptools rosdep rosinstall_generator wstool rosinstall catkin_tools bloom empy sphinx pycurl
+  pip2 install -U setuptools rosdep rosinstall_generator wstool rosinstall catkin_tools bloom empy sphinx
+
+  # Install pycurl
+  export PYCURL_SSL_LIBRARY=openssl
+  export LDFLAGS=-L/usr/local/opt/openssl/lib;export CPPFLAGS=-I/usr/local/opt/openssl/include; pip2 install -U pycurl --compile --no-cache-dir
 
   # Rosdep has an issue detecting that qt5 is correctly installed, so preinstall it. This is a keg-only formula,
   # so add its location to the prefix path in order for workspace packages to be able to find it.
